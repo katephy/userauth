@@ -3,6 +3,7 @@ package com.shop.user.controller;
 import java.util.Objects;
 
 import com.shop.user.config.JwtTokenUtil;
+import com.shop.user.dto.UserDto;
 import com.shop.user.model.JwtRequest;
 import com.shop.user.model.JwtResponse;
 import com.shop.user.service.JwtUserDetailsService;
@@ -42,6 +43,11 @@ public class JwtAuthenticationController {
         final String token = jwtTokenUtil.generateToken(userDetails);
 
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<?> saveUser(@RequestBody UserDto user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(user));
     }
 
     private void authenticate(String username, String password) throws Exception {

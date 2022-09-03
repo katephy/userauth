@@ -44,11 +44,11 @@ public class WebSecurityConfig {
         // We don't need CSRF for this example
         httpSecurity.csrf().disable()
                 // don't authenticate this particular request
-                .authorizeHttpRequests().antMatchers("/authenticate").permitAll()
+                .authorizeHttpRequests().antMatchers("/authenticate", "/register").permitAll()
                 // all other requests need to be authenticated
                 .anyRequest().authenticated().and()
-                // make sure we use stateless session; session won't be used to store user's state.
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                // make sure we use stateless session; session won't be used to store user's state.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Add a filter to validate the tokens with every request
